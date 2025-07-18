@@ -10,8 +10,14 @@ class Bureaucrat
         int grade;
 
     public:
+        // Orthodox Canonical Form
+        Bureaucrat();                                    // Default constructor
+        Bureaucrat(const Bureaucrat& other);            // Copy constructor
+        Bureaucrat& operator=(const Bureaucrat& other); // Copy assignment operator
+        ~Bureaucrat();                                   // Destructor
+
+        // Parameterized constructor
         Bureaucrat(const std::string &name, int grade);
-        ~Bureaucrat();
 
         int getGrade() const;
         std::string getName() const;
@@ -21,6 +27,7 @@ class Bureaucrat
             public:
                 GradeTooHighException();
                 ~GradeTooHighException() throw();
+                virtual const char* what() const throw();
         };
 
         class GradeTooLowException : public std::exception
@@ -28,16 +35,13 @@ class Bureaucrat
             public:
                 GradeTooLowException();
                 ~GradeTooLowException() throw();
+                virtual const char* what() const throw();
         };
 
         void incrementGrade(int amount);
         void decrementGrade(int amount);
 };
 
-std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat)
-{
-    os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
-    return os;
-}
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat);
 
 #endif

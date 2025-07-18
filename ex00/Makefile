@@ -6,7 +6,7 @@
 #    By: rmakoni <rmakoni@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/10 13:52:58 by rmakoni           #+#    #+#              #
-#    Updated: 2025/07/10 13:54:20 by rmakoni          ###   ########.fr        #
+#    Updated: 2025/07/18 22:21:50 by rmakoni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC = 	main.cpp \
 OBJ = $(SRC:.cpp=.o)
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror 
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 
 all: $(NAME)
 
