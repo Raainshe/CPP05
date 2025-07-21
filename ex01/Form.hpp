@@ -6,7 +6,7 @@
 /*   By: rmakoni <rmakoni@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:38:46 by rmakoni           #+#    #+#             */
-/*   Updated: 2025/07/18 23:51:08 by rmakoni          ###   ########.fr       */
+/*   Updated: 2025/07/21 09:53:18 by rmakoni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ class Form
 
         void beSigned(const Bureaucrat &bureaucrat);
 };
+
+std::ostream &operator<<(std::ostream &os, const Form &form);
 
 #endif

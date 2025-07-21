@@ -6,120 +6,206 @@
 /*   By: rmakoni <rmakoni@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 14:22:59 by rmakoni           #+#    #+#             */
-/*   Updated: 2025/07/18 23:23:29 by rmakoni          ###   ########.fr       */
+/*   Updated: 2025/07/21 10:40:10 by rmakoni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Form.hpp"
 #include "Bureaucrat.hpp"
+#include <iostream>
 
-int main()
-{
-    std::cout << "=== BUREAUCRAT COMPREHENSIVE TESTING ===" << std::endl;
-    
-    // Test 1: Default Constructor
-    std::cout << "\n--- Test 1: Default Constructor ---" << std::endl;
-    Bureaucrat defaultBureaucrat;
-    std::cout << "Default bureaucrat created: " << defaultBureaucrat << std::endl;
-    
-    // Test 2: Parameterized Constructor (valid grades)
-    std::cout << "\n--- Test 2: Parameterized Constructor (Valid Grades) ---" << std::endl;
-    Bureaucrat alice("Alice", 1);      // Highest grade
-    Bureaucrat bob("Bob", 75);         // Middle grade
-    Bureaucrat charlie("Charlie", 150); // Lowest grade
-    
-    std::cout << "Highest grade: " << alice << std::endl;
-    std::cout << "Middle grade: " << bob << std::endl;
-    std::cout << "Lowest grade: " << charlie << std::endl;
-    
-    // Test 3: Getter Functions
-    std::cout << "\n--- Test 3: Getter Functions ---" << std::endl;
-    std::cout << "Alice's name: " << alice.getName() << std::endl;
-    std::cout << "Alice's grade: " << alice.getGrade() << std::endl;
-    std::cout << "Bob's name: " << bob.getName() << std::endl;
-    std::cout << "Bob's grade: " << bob.getGrade() << std::endl;
-    
-    // Test 4: Increment Grade (makes grade better/lower number)
-    std::cout << "\n--- Test 4: Increment Grade ---" << std::endl;
-    std::cout << "Before increment: " << bob << std::endl;
-    bob.incrementGrade(10);
-    std::cout << "After increment by 10: " << bob << std::endl;
-    bob.incrementGrade(5);
-    std::cout << "After increment by 5: " << bob << std::endl;
-    
-    // Test 5: Decrement Grade (makes grade worse/higher number)
-    std::cout << "\n--- Test 5: Decrement Grade ---" << std::endl;
-    std::cout << "Before decrement: " << bob << std::endl;
-    bob.decrementGrade(20);
-    std::cout << "After decrement by 20: " << bob << std::endl;
-    bob.decrementGrade(15);
-    std::cout << "After decrement by 15: " << bob << std::endl;
-    
-    // Test 6: Constructor Exception - Grade Too High
-    std::cout << "\n--- Test 6: Constructor Exception (Grade Too High) ---" << std::endl;
-    try {
-        Bureaucrat invalid1("InvalidHigh", 0);
-        std::cout << invalid1 << std::endl;
-    } catch (const std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << std::endl;
-    }
-    
-    // Test 7: Constructor Exception - Grade Too Low
-    std::cout << "\n--- Test 7: Constructor Exception (Grade Too Low) ---" << std::endl;
-    try {
-        Bureaucrat invalid2("InvalidLow", 151);
-        std::cout << invalid2 << std::endl;
-    } catch (const std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << std::endl;
-    }
-    
-    // Test 8: Increment Exception - Grade Too High
-    std::cout << "\n--- Test 8: Increment Exception (Grade Too High) ---" << std::endl;
-    try {
-        Bureaucrat topBureaucrat("TopBureaucrat", 1);
-        std::cout << "Before increment: " << topBureaucrat << std::endl;
-        topBureaucrat.incrementGrade(1);
-        std::cout << "After increment: " << topBureaucrat << std::endl;
-    } catch (const std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << std::endl;
-    }
-    
-    // Test 9: Decrement Exception - Grade Too Low
-    std::cout << "\n--- Test 9: Decrement Exception (Grade Too Low) ---" << std::endl;
-    try {
-        Bureaucrat bottomBureaucrat("BottomBureaucrat", 150);
-        std::cout << "Before decrement: " << bottomBureaucrat << std::endl;
-        bottomBureaucrat.decrementGrade(1);
-        std::cout << "After decrement: " << bottomBureaucrat << std::endl;
-    } catch (const std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << std::endl;
-    }
-    
-    // Test 10: Edge Cases - Large increments/decrements
-    std::cout << "\n--- Test 10: Edge Cases (Large Changes) ---" << std::endl;
-    try {
-        Bureaucrat edgeCase("EdgeCase", 75);
-        std::cout << "Before large increment: " << edgeCase << std::endl;
-        edgeCase.incrementGrade(75);  // Should fail (75 - 75 = 0, which is < 1)
-        std::cout << "After large increment: " << edgeCase << std::endl;
-    } catch (const std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << std::endl;
-    }
+void testDefaultConstructor() {
+    std::cout << "\n=== Testing Default Constructor ===" << std::endl;
+    Form defaultForm;
+    std::cout << "Default form: " << defaultForm << std::endl;
+    std::cout << "Name: " << defaultForm.getName() << std::endl;
+    std::cout << "Is signed: " << defaultForm.getIsSigned() << std::endl;
+    std::cout << "Grade to sign: " << defaultForm.getGradeToSign() << std::endl;
+    std::cout << "Grade to execute: " << defaultForm.getGradeToExecute() << std::endl;
+}
+
+void testParameterizedConstructor() {
+    std::cout << "\n=== Testing Parameterized Constructor ===" << std::endl;
     
     try {
-        Bureaucrat edgeCase2("EdgeCase2", 75);
-        std::cout << "Before large decrement: " << edgeCase2 << std::endl;
-        edgeCase2.decrementGrade(76);  // Should fail (75 + 76 = 151, which is > 150)
-        std::cout << "After large decrement: " << edgeCase2 << std::endl;
+        Form validForm("Tax Form", 50, 25);
+        std::cout << "Valid form created: " << validForm << std::endl;
     } catch (const std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << std::endl;
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
+    }
+
+    // Test grade too high (< 1)
+    std::cout << "\nTesting grade too high (0):" << std::endl;
+    try {
+        Form invalidForm("Invalid Form", 0, 50);
+        std::cout << "ERROR: Should have thrown exception!" << std::endl;
+    } catch (const Form::GradeTooHighException& e) {
+        std::cout << "Caught expected exception: " << e.what() << std::endl;
+    }
+
+    // Test grade too low (> 150)
+    std::cout << "\nTesting grade too low (151):" << std::endl;
+    try {
+        Form invalidForm("Invalid Form", 50, 151);
+        std::cout << "ERROR: Should have thrown exception!" << std::endl;
+    } catch (const Form::GradeTooLowException& e) {
+        std::cout << "Caught expected exception: " << e.what() << std::endl;
+    }
+
+    // Test boundary values
+    std::cout << "\nTesting boundary values (1 and 150):" << std::endl;
+    try {
+        Form boundaryForm("Boundary Form", 1, 150);
+        std::cout << "Boundary form created: " << boundaryForm << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
+    }
+}
+
+void testCopyConstructor() {
+    std::cout << "\n=== Testing Copy Constructor ===" << std::endl;
+    
+    Form original("Original Form", 75, 100);
+    std::cout << "Original: " << original << std::endl;
+    
+    Form copy(original);
+    std::cout << "Copy: " << copy << std::endl;
+    
+    std::cout << "Testing that copy is independent..." << std::endl;
+    // Note: We can't modify const members, but we can test signing
+}
+
+void testAssignmentOperator() {
+    std::cout << "\n=== Testing Assignment Operator ===" << std::endl;
+    
+    Form form1("Form 1", 50, 75);
+    Form form2("Form 2", 100, 125);
+    
+    std::cout << "Before assignment:" << std::endl;
+    std::cout << "Form1: " << form1 << std::endl;
+    std::cout << "Form2: " << form2 << std::endl;
+    
+    form2 = form1;
+    
+    std::cout << "After form2 = form1:" << std::endl;
+    std::cout << "Form1: " << form1 << std::endl;
+    std::cout << "Form2: " << form2 << std::endl;
+    
+    // Test self-assignment
+    form1 = form1;
+    std::cout << "After self-assignment, Form1: " << form1 << std::endl;
+}
+
+void testGetters() {
+    std::cout << "\n=== Testing Getters ===" << std::endl;
+    
+    Form testForm("Test Form", 42, 84);
+    
+    std::cout << "getName(): " << testForm.getName() << std::endl;
+    std::cout << "getIsSigned(): " << testForm.getIsSigned() << std::endl;
+    std::cout << "getGradeToSign(): " << testForm.getGradeToSign() << std::endl;
+    std::cout << "getGradeToExecute(): " << testForm.getGradeToExecute() << std::endl;
+}
+
+void testBeSigned() {
+    std::cout << "\n=== Testing beSigned Method ===" << std::endl;
+    
+    Form form("Signing Test", 50, 25);
+    std::cout << "Form before signing: " << form << std::endl;
+    
+    // Test with bureaucrat who can sign (grade <= 50)
+    std::cout << "\nTesting with authorized bureaucrat (grade 30):" << std::endl;
+    try {
+        Bureaucrat authorizedBureaucrat("Alice", 30);
+        std::cout << "Bureaucrat: " << authorizedBureaucrat << std::endl;
+        form.beSigned(authorizedBureaucrat);
+        std::cout << "Form after signing: " << form << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
     }
     
-    // Test 11: Insertion Operator Format Test
-    std::cout << "\n--- Test 11: Insertion Operator Format ---" << std::endl;
-    Bureaucrat formatTest("John Doe", 42);
-    std::cout << "Format test: " << formatTest << std::endl;
-    std::cout << "Direct output: ";
-    std::cout << formatTest;
+    // Test with bureaucrat who cannot sign (grade > 50)
+    std::cout << "\nTesting with unauthorized bureaucrat (grade 75):" << std::endl;
+    try {
+        Form form2("Another Form", 50, 25);
+        Bureaucrat unauthorizedBureaucrat("Bob", 75);
+        std::cout << "Bureaucrat: " << unauthorizedBureaucrat << std::endl;
+        form2.beSigned(unauthorizedBureaucrat);
+        std::cout << "ERROR: Should have thrown exception!" << std::endl;
+    } catch (const Form::GradeTooLowException& e) {
+        std::cout << "Caught expected exception: " << e.what() << std::endl;
+    }
+    
+    // Test edge case: exact grade match
+    std::cout << "\nTesting with exact grade match (grade 50):" << std::endl;
+    try {
+        Form form3("Exact Grade Form", 50, 25);
+        Bureaucrat exactGradeBureaucrat("Charlie", 50);
+        std::cout << "Bureaucrat: " << exactGradeBureaucrat << std::endl;
+        form3.beSigned(exactGradeBureaucrat);
+        std::cout << "Form after signing: " << form3 << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+}
+
+void testExceptions() {
+    std::cout << "\n=== Testing Exception Classes ===" << std::endl;
+    
+    // Test GradeTooHighException
+    try {
+        throw Form::GradeTooHighException();
+    } catch (const Form::GradeTooHighException& e) {
+        std::cout << "GradeTooHighException what(): " << e.what() << std::endl;
+    }
+    
+    // Test GradeTooLowException
+    try {
+        throw Form::GradeTooLowException();
+    } catch (const Form::GradeTooLowException& e) {
+        std::cout << "GradeTooLowException what(): " << e.what() << std::endl;
+    }
+}
+
+void testStreamOperator() {
+    std::cout << "\n=== Testing Stream Output Operator ===" << std::endl;
+    
+    Form unsignedForm("Unsigned Form", 100, 50);
+    std::cout << "Unsigned form: " << unsignedForm << std::endl;
+    
+    Form signedForm("Signed Form", 75, 25);
+    try {
+        Bureaucrat signer("Signer", 50);
+        signedForm.beSigned(signer);
+        std::cout << "Signed form: " << signedForm << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+}
+
+void testDestructor() {
+    std::cout << "\n=== Testing Destructor ===" << std::endl;
+    std::cout << "Creating and destroying forms in scope:" << std::endl;
+    {
+        Form temp1("Temp Form 1", 50, 25);
+        Form temp2("Temp Form 2", 75, 100);
+        std::cout << "Forms created in scope" << std::endl;
+    }
+    std::cout << "Forms should be destroyed when leaving scope" << std::endl;
+}
+
+int main() {
+    std::cout << "=== COMPREHENSIVE FORM CLASS TESTING ===" << std::endl;
+    
+    testDefaultConstructor();
+    testParameterizedConstructor();
+    testCopyConstructor();
+    testAssignmentOperator();
+    testGetters();
+    testBeSigned();
+    testExceptions();
+    testStreamOperator();
+    testDestructor();
     
     return 0;
 }
