@@ -6,7 +6,7 @@
 #    By: rmakoni <rmakoni@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/10 13:52:58 by rmakoni           #+#    #+#              #
-#    Updated: 2025/07/21 14:17:02 by rmakoni          ###   ########.fr        #
+#    Updated: 2025/07/21 14:59:46 by rmakoni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = 	main.cpp \
 		AForm.cpp \
 		ShruberyCreationForm.cpp \
 		RobotomyRequestForm.cpp \
-		PresidentialPardonForm.cpp
+		PresidentialPardonForm.cpp \
+		Intern.cpp
 OBJ = $(SRC:.cpp=.o)
 
 CXX = c++

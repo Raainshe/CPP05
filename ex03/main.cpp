@@ -5,185 +5,187 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmakoni <rmakoni@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:52:58 by rmakoni           #+#    #+#             */
-/*   Updated: 2025/07/21 14:23:18 by rmakoni          ###   ########.fr       */
+/*   Created: 2025/07/21 15:22:50 by rmakoni           #+#    #+#             */
+/*   Updated: 2025/07/21 15:25:50 by rmakoni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Intern.hpp"
 #include "Bureaucrat.hpp"
-#include "AForm.hpp"
-#include "ShruberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
 #include <iostream>
 
-void testShrubberyCreationForm() {
-    std::cout << "\n=== TESTING SHRUBBERY CREATION FORM ===" << std::endl;
+void testDefaultConstructor() {
+    std::cout << "\n=== TESTING DEFAULT CONSTRUCTOR ===" << std::endl;
+    Intern intern;
+    std::cout << "Default constructor test completed" << std::endl;
+}
+
+void testCopyConstructor() {
+    std::cout << "\n=== TESTING COPY CONSTRUCTOR ===" << std::endl;
+    Intern original;
+    std::cout << "\nCreating copy..." << std::endl;
+    Intern copy(original);
+    std::cout << "Copy constructor test completed" << std::endl;
+}
+
+void testAssignmentOperator() {
+    std::cout << "\n=== TESTING ASSIGNMENT OPERATOR ===" << std::endl;
+    Intern intern1;
+    Intern intern2;
+    
+    std::cout << "\nTesting assignment..." << std::endl;
+    intern2 = intern1;
+    
+    std::cout << "\nTesting self-assignment..." << std::endl;
+    intern1 = intern1;
+    
+    std::cout << "Assignment operator test completed" << std::endl;
+}
+
+void testMakeFormValid() {
+    std::cout << "\n=== TESTING MAKEFORM - VALID FORMS ===" << std::endl;
+    Intern intern;
+    AForm* forms[3];
     
     try {
-        ShrubberyCreationForm shrub("garden");
-        Bureaucrat lowGrade("LowGrade", 150);
-        Bureaucrat midGrade("MidGrade", 140);
-        Bureaucrat highGrade("HighGrade", 100);
-
-        std::cout << shrub << std::endl;
-
-        // Test signing
-        std::cout << "\n-- Testing signing with insufficient grade --" << std::endl;
-        try {
-            shrub.beSigned(lowGrade);
-        } catch (const std::exception& e) {
-            std::cout << "Exception: " << e.what() << std::endl;
+        // Test ShrubberyCreationForm
+        std::cout << "\n-- Creating Shrubbery Form --" << std::endl;
+        forms[0] = intern.makeForm("shrubbery creation", "ryan");
+        if (forms[0]) {
+            std::cout << "Form created: " << forms[0]->getName() << std::endl;
         }
-
-        std::cout << "\n-- Testing signing with sufficient grade --" << std::endl;
-        shrub.beSigned(midGrade);
-        std::cout << "Form signed: " << shrub.getIsSigned() << std::endl;
-
-        // Test execution
-        std::cout << "\n-- Testing execution --" << std::endl;
-        highGrade.executeForm(shrub);
-
-    } catch (const std::exception& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-}
-
-void testRobotomyRequestForm() {
-    std::cout << "\n=== TESTING ROBOTOMY REQUEST FORM ===" << std::endl;
-    
-    try {
-        RobotomyRequestForm robot("Marvin");
-        Bureaucrat lowGrade("LowGrade", 80);
-        Bureaucrat midGrade("MidGrade", 60);
-        Bureaucrat highGrade("HighGrade", 30);
-
-        std::cout << robot << std::endl;
-
-        // Test signing and execution
-        std::cout << "\n-- Testing signing and execution --" << std::endl;
-        robot.beSigned(midGrade);
-        std::cout << "Form signed: " << robot.getIsSigned() << std::endl;
-
-        // Test multiple executions to show 50% success rate
-        std::cout << "\n-- Testing multiple executions (50% success rate) --" << std::endl;
-        for (int i = 0; i < 4; i++) {
-            std::cout << "\nExecution attempt " << (i + 1) << ":" << std::endl;
-            highGrade.executeForm(robot);
-        }
-
-        // Test with insufficient execution grade
-        std::cout << "\n-- Testing execution with insufficient grade --" << std::endl;
-        lowGrade.executeForm(robot);
-
-    } catch (const std::exception& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-}
-
-void testPresidentialPardonForm() {
-    std::cout << "\n=== TESTING PRESIDENTIAL PARDON FORM ===" << std::endl;
-    
-    try {
-        PresidentialPardonForm pardon("Arthur Dent");
-        Bureaucrat lowGrade("LowGrade", 30);
-        Bureaucrat midGrade("MidGrade", 20);
-        Bureaucrat highGrade("HighGrade", 1);
-
-        std::cout << pardon << std::endl;
-
-        // Test signing with insufficient grade
-        std::cout << "\n-- Testing signing with insufficient grade --" << std::endl;
-        try {
-            pardon.beSigned(lowGrade);
-        } catch (const std::exception& e) {
-            std::cout << "Exception: " << e.what() << std::endl;
-        }
-
-        // Test signing with sufficient grade
-        std::cout << "\n-- Testing signing with sufficient grade --" << std::endl;
-        pardon.beSigned(midGrade);
-        std::cout << "Form signed: " << pardon.getIsSigned() << std::endl;
-
-        // Test execution with insufficient grade
-        std::cout << "\n-- Testing execution with insufficient grade --" << std::endl;
-        midGrade.executeForm(pardon);
-
-        // Test execution with sufficient grade
-        std::cout << "\n-- Testing execution with sufficient grade --" << std::endl;
-        highGrade.executeForm(pardon);
-
-    } catch (const std::exception& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-}
-
-void testFormRequirements() {
-    std::cout << "\n=== TESTING FORM REQUIREMENTS ===" << std::endl;
-    
-    // Test that forms have correct grade requirements
-    ShrubberyCreationForm shrub("test");
-    RobotomyRequestForm robot("test");
-    PresidentialPardonForm pardon("test");
-
-    std::cout << "ShrubberyCreationForm - Sign: " << shrub.getGradeToSign() 
-              << ", Execute: " << shrub.getGradeToExecute() << std::endl;
-    std::cout << "RobotomyRequestForm - Sign: " << robot.getGradeToSign() 
-              << ", Execute: " << robot.getGradeToExecute() << std::endl;
-    std::cout << "PresidentialPardonForm - Sign: " << pardon.getGradeToSign() 
-              << ", Execute: " << pardon.getGradeToExecute() << std::endl;
-
-    // Test unsigned form execution
-    std::cout << "\n-- Testing execution of unsigned forms --" << std::endl;
-    Bureaucrat supreme("Supreme", 1);
-    
-    supreme.executeForm(shrub);   // Should fail - not signed
-    supreme.executeForm(robot);   // Should fail - not signed
-    supreme.executeForm(pardon);  // Should fail - not signed
-}
-
-void testPolymorphism() {
-    std::cout << "\n=== TESTING POLYMORPHISM ===" << std::endl;
-    
-    try {
-        Bureaucrat supreme("Supreme", 1);
         
-        // Create forms using base class pointers
-        AForm* forms[3];
-        forms[0] = new ShrubberyCreationForm("poly_test");
-        forms[1] = new RobotomyRequestForm("poly_robot");
-        forms[2] = new PresidentialPardonForm("poly_pardon");
-
-        // Sign and execute all forms polymorphically
-        for (int i = 0; i < 3; i++) {
-            std::cout << "\n-- Form " << (i + 1) << ": " << forms[i]->getName() << " --" << std::endl;
-            forms[i]->beSigned(supreme);
-            supreme.executeForm(*forms[i]);
+        // Test RobotomyRequestForm
+        std::cout << "\n-- Creating Robotomy Form --" << std::endl;
+        forms[1] = intern.makeForm("robotomy request", "glen");
+        if (forms[1]) {
+            std::cout << "Form created: " << forms[1]->getName() << std::endl;
         }
-
+        
+        // Test PresidentialPardonForm
+        std::cout << "\n-- Creating Presidential Pardon Form --" << std::endl;
+        forms[2] = intern.makeForm("presidential pardon", "gregory");
+        if (forms[2]) {
+            std::cout << "Form created: " << forms[2]->getName() << std::endl;
+        }
+        
         // Clean up
         for (int i = 0; i < 3; i++) {
             delete forms[i];
         }
-
+        
     } catch (const std::exception& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
     }
 }
 
-int main() {
-    std::cout << "Testing all three concrete form classes and their interactions" << std::endl;
+void testMakeFormInvalid() {
+    std::cout << "\n=== TESTING MAKEFORM - INVALID FORMS ===" << std::endl;
+    Intern intern;
+    
+    std::string invalidForms[] = {
+        "invalid form",
+        "shrubbery",  // partial match
+        "SHRUBBERY CREATION",  // wrong case
+        "robotomy",  // partial match
+        "",  // empty string
+        "presidential",  // partial match
+    };
+    
+    for (int i = 0; i < 6; i++) {
+        std::cout << "\n-- Testing invalid form: \"" << invalidForms[i] << "\" --" << std::endl;
+        try {
+            AForm* form = intern.makeForm(invalidForms[i], "target");
+            std::cout << "ERROR: Should have thrown exception!" << std::endl;
+            delete form;
+        } catch (const Intern::FormNotFoundException& e) {
+            std::cout << "Caught expected exception: " << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "Caught unexpected exception: " << e.what() << std::endl;
+        }
+    }
+}
 
-    testFormRequirements();
-    testShrubberyCreationForm();
-    testRobotomyRequestForm();
-    testPresidentialPardonForm();
-    testPolymorphism();
+void testFormsIntegration() {
+    std::cout << "\n=== TESTING FORMS INTEGRATION ===" << std::endl;
+    Intern intern;
+    Bureaucrat supreme("Supreme", 1);
+    
+    try {
+        // Create and test each form type
+        std::cout << "\n-- Integration Test: Shrubbery --" << std::endl;
+        AForm* shrub = intern.makeForm("shrubbery creation", "office");
+        if (shrub) {
+            shrub->beSigned(supreme);
+            supreme.executeForm(*shrub);
+            delete shrub;
+        }
+        
+        std::cout << "\n-- Integration Test: Robotomy --" << std::endl;
+        AForm* robot = intern.makeForm("robotomy request", "intern");
+        if (robot) {
+            robot->beSigned(supreme);
+            supreme.executeForm(*robot);
+            delete robot;
+        }
+        
+        std::cout << "\n-- Integration Test: Presidential Pardon --" << std::endl;
+        AForm* pardon = intern.makeForm("presidential pardon", "student");
+        if (pardon) {
+            pardon->beSigned(supreme);
+            supreme.executeForm(*pardon);
+            delete pardon;
+        }
+        
+    } catch (const std::exception& e) {
+        std::cout << "Exception during integration test: " << e.what() << std::endl;
+    }
+}
 
-    std::cout << "\n=== ALL TESTS COMPLETED ===" << std::endl;
-    std::cout << "Check the generated files:" << std::endl;
-    std::cout << "- garden_shrubbery.txt (ASCII trees)" << std::endl;
-    std::cout << "- poly_test_shrubbery.txt (ASCII trees)" << std::endl;
+void testExceptionClass() {
+    std::cout << "\n=== TESTING EXCEPTION CLASS ===" << std::endl;
+    
+    try {
+        throw Intern::FormNotFoundException();
+    } catch (const Intern::FormNotFoundException& e) {
+        std::cout << "FormNotFoundException what(): " << e.what() << std::endl;
+    }
+    
+    // Test exception inheritance
+    try {
+        throw Intern::FormNotFoundException();
+    } catch (const std::exception& e) {
+        std::cout << "Caught as std::exception: " << e.what() << std::endl;
+    }
+}
 
+void testDestructor() {
+    std::cout << "\n=== TESTING DESTRUCTOR ===" << std::endl;
+    std::cout << "Creating intern in scope..." << std::endl;
+    {
+        Intern intern;
+        std::cout << "Intern created in scope" << std::endl;
+    }
+    std::cout << "Intern should be destroyed when leaving scope" << std::endl;
+}
+
+int main()
+{
+    std::cout << "=== EX03 INTERN CLASS COMPREHENSIVE TESTING ===" << std::endl;
+    
+    testDefaultConstructor();
+    testCopyConstructor();
+    testAssignmentOperator();
+    testMakeFormValid();
+    testMakeFormInvalid();
+    testExceptionClass();
+    testFormsIntegration();
+    testDestructor();
+    
+    std::cout << "\n=== ALL INTERN TESTS COMPLETED ===" << std::endl;
+    std::cout << "Check generated files:" << std::endl;
+    std::cout << "- office_shrubbery.txt" << std::endl;
+    std::cout << "- Forms were created and executed successfully!" << std::endl;
+    
     return 0;
 }
