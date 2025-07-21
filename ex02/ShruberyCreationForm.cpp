@@ -6,7 +6,7 @@
 /*   By: rmakoni <rmakoni@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 12:02:34 by rmakoni           #+#    #+#             */
-/*   Updated: 2025/07/21 13:52:30 by rmakoni          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:20:17 by rmakoni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void ShrubberyCreationForm::execute(const Bureaucrat &executor) const
             throw std::runtime_error("Failed to write to file: " + filename);
         }
         
-        // file.close() is automatic when file goes out of scope (RAII)
         std::cout << "Shrubbery created successfully in " << filename << std::endl;
         
     } catch (const std::exception& e) {

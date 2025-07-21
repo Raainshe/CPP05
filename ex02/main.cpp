@@ -6,7 +6,7 @@
 /*   By: rmakoni <rmakoni@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 13:52:58 by rmakoni           #+#    #+#             */
-/*   Updated: 2025/07/21 14:14:11 by rmakoni          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:23:18 by rmakoni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ void testPolymorphism() {
 }
 
 int main() {
-    std::cout << "=== EX02 COMPREHENSIVE TESTING ===" << std::endl;
     std::cout << "Testing all three concrete form classes and their interactions" << std::endl;
 
     testFormRequirements();
